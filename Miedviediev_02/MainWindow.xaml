@@ -1,0 +1,22 @@
+﻿<Window x:Class="Miedviediev_02.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Miedviediev_02"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
+        mc:Ignorable="d"
+        Title="Practice2.Signing_up"
+        Height="500"
+        Width="600"
+        ResizeMode="NoResize">
+    <Window.DataContext>
+        <local:MainVm></local:MainVm>
+    </Window.DataContext>
+    <StackPanel>
+        <local:SignUp></local:SignUp>
+        <fa:ImageAwesome Icon="Refresh" Width="50" Height="50" Spin="True"
+                         Visibility="{Binding LoaderVisibility, Mode=OneWay}">
+        </fa:ImageAwesome>
+    </StackPanel>
+</Window>
