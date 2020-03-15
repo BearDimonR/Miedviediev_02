@@ -88,7 +88,7 @@
             <TextBox Margin="40,10,10,10"
                      FontSize="14"
                      Name="EmailBox"
-                     MaxLength="20"
+                     MaxLength="25"
                      Style="{StaticResource ErrorStyleTextBox}">
                 <Binding Path="Email" Mode="TwoWay">
                     <Binding.ValidationRules>

@@ -66,7 +66,7 @@ namespace Miedviediev_02.Models
         private string CheckName(string name)
         {
             Thread.Sleep(1000);
-            Regex regex = new Regex(@"[A-Za-z]{1,10}");
+            Regex regex = new Regex(@"[A-Za-z]{2,}");
             if(regex.Match(name).Length != name.Length)
                 throw new InvalidPersonName(name);
             return name;
@@ -75,8 +75,8 @@ namespace Miedviediev_02.Models
         private string CheckSurname(string surname)
         {
             Thread.Sleep(200);
-            Regex regex = new Regex(@"[A-Za-z]{2,15}");
-            if(regex.IsMatch(surname))
+            Regex regex = new Regex(@"[A-Za-z]{2,}");
+            if(regex.Match(surname).Length != surname.Length)
                 throw new InvalidPersonSurname(surname);
             return surname;
         }
@@ -84,8 +84,8 @@ namespace Miedviediev_02.Models
         private string CheckEmail(string email)
         {
             Thread.Sleep(2000);
-            Regex regex = new Regex(@"^[\w-\.]{2,}@([\w-]{2,}\.){1}edu.ua");
-            if(!regex.IsMatch(email))
+            Regex regex = new Regex(@"^[\w-\.]{2,}@ukma.edu.ua");
+            if(regex.Match(email).Length != email.Length)
                 throw new NotEduMailException(email);
             return email;
         }
