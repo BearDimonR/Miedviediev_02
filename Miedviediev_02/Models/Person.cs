@@ -1,90 +1,93 @@
 ﻿using System;
 using System.Globalization;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Miedviediev_02.Exceptions;
+using Miedviediev_02.ViewModels.InformationVM;
 
-namespace Miedviediev_02
+namespace Miedviediev_02.Models
 {
     public class Person
     {
-        private string _name;
-        private string _surname;
-        private string _email;
+        private readonly string _name;
+        private readonly string _surname;
+        private readonly string _email;
         private DateTime _birthday;
         private readonly bool _isAdult;
         private readonly WesternZodiac _westernZodiac;
         private readonly ChineseZodiac _chineseSign;
         private readonly bool _isBirthday;
-
-
-        public string Name
-        {
-            get => _name;
-            set => _name = value;
-        }
-
-        public string Surname
-        {
-            get => _surname;
-            set => _surname = value;
-        }
-
-        public string Email
-        {
-            get => _email;
-            set => _email = value;
-        }
-
-        public DateTime Birthday
-        {
-            get => _birthday;
-            set => _birthday = value;
-        }
-
-        public bool IsAdult => _isAdult;
-
-        public WesternZodiac SunSign => _westernZodiac;
-
-        public ChineseZodiac ChineseSign => _chineseSign;
-
         public bool IsBirthday => _isBirthday;
 
         public Person(string name, string surname, string email, DateTime birthday)
         {
-            _name = name;
-            _surname = surname;
-            _email = email;
             _birthday = birthday;
-            (_westernZodiac, _chineseSign, _isAdult, _isBirthday) = CreateObject();
+            (_name, _surname, _email, _westernZodiac, _chineseSign, _isAdult, _isBirthday) = 
+                CreateObject(name, surname, email);
         }
 
-        public Person(string name, string surname, string email)
+        public Person(string name, string surname, string email) :
+            this(name, surname, email, DateTime.Today)
         {
-            _name = name;
-            _surname = surname;
-            _email = email;
-            _birthday = DateTime.Today;
-            (_westernZodiac, _chineseSign, _isAdult, _isBirthday) = CreateObject();
         }
 
-        public Person(string name, string surname, DateTime birthday)
+        public Person(string name, string surname, DateTime birthday) :
+            this(name, surname, null, birthday)
         {
-            _name = name;
-            _surname = surname;
-            _birthday = birthday;
-            _email = null;
-            (_westernZodiac, _chineseSign, _isAdult, _isBirthday) = CreateObject();
+        }
+
+        
+        private (string name, string surname, string email, WesternZodiac _westernZodiac, 
+            ChineseZodiac _chineseSign, bool _isAdult, bool _isBirthday)
+            CreateObject(string name, string surname, string email)
+        {
+            try
+            {
+                Task<string> nTask = Task.Run(() => CheckName(name));
+                Task<string> sTask = Task.Run(() => CheckSurname(surname));
+                Task<string> eTask = Task.Run(() => CheckEmail(email));
+                Task<WesternZodiac> wzTask = Task.Run(FindWesternZodiac);
+                Task<ChineseZodiac> czTask = Task.Run(FindChineseZodiac);
+                Task<int> ageTask = Task.Run(CountAge);
+                Task<bool> birthTask = ageTask.ContinueWith((task) => CalculateBirthday(task.Result));
+                Task.WaitAll(nTask, sTask, eTask, wzTask, czTask, birthTask);
+                return (nTask.Result, sTask.Result, eTask.Result, 
+                    wzTask.Result, czTask.Result, (ageTask.Result >= 18), birthTask.Result);
+            }
+            catch (Exception e)
+            {
+                if (e.InnerException != null) 
+                    throw e.InnerException;
+                throw new ApplicationException(@"Undefined exception!");
+            }
         }
         
-        private (WesternZodiac _westernZodiac, ChineseZodiac _chineseSign, bool _isAdult, bool _isBirthday)
-            CreateObject()
+        private string CheckName(string name)
         {
-            Task<WesternZodiac> wzTask = Task.Run(FindWesternZodiac);
-            Task<ChineseZodiac> czTask = Task.Run(FindChineseZodiac);
-            Task<int> ageTask = Task.Run(CountAge);
-            Task<bool> birthTask = ageTask.ContinueWith((task) => CalculateBirthday(task.Result));
-            Task.WaitAll(wzTask, czTask, birthTask);
-            return (wzTask.Result, czTask.Result, (ageTask.Result >= 18), birthTask.Result);
+            Thread.Sleep(1000);
+            Regex regex = new Regex(@"[A-Za-z]{1,10}");
+            if(regex.Match(name).Length != name.Length)
+                throw new InvalidPersonName(name);
+            return name;
+        }
+        
+        private string CheckSurname(string surname)
+        {
+            Thread.Sleep(200);
+            Regex regex = new Regex(@"[A-Za-z]{2,15}");
+            if(regex.IsMatch(surname))
+                throw new InvalidPersonSurname(surname);
+            return surname;
+        }
+
+        private string CheckEmail(string email)
+        {
+            Thread.Sleep(2000);
+            Regex regex = new Regex(@"^[\w-\.]{2,}@([\w-]{2,}\.){1}edu.ua");
+            if(!regex.IsMatch(email))
+                throw new NotEduMailException(email);
+            return email;
         }
         
         private WesternZodiac FindWesternZodiac()
@@ -117,7 +120,7 @@ namespace Miedviediev_02
                 case 12:
                     return _birthday.Day <= 21 ? WesternZodiac.Sagittarius : WesternZodiac.Capricorn;
                 default:
-                    throw new ArgumentOutOfRangeException($"Undefined WesternZodiac");
+                    throw new ArgumentOutOfRangeException($"Undefined WesternZodiac: {_birthday}");
             }
         }
 
@@ -141,9 +144,12 @@ namespace Miedviediev_02
             Thread.Sleep(500);
             DateTime now = DateTime.Now;
             int age = now.Year - _birthday.Year;
-            if (_birthday > now.AddYears(-age)) age--;
-            if (age < 0 || age > 135)
-                throw new ArgumentOutOfRangeException($"Impossible Birthday Date!!");
+            if (_birthday > now.AddYears(-age)) 
+                age--;
+            if (age > 135) 
+                throw new OldPersonException(_birthday);
+            if (age < 0) 
+                throw new NotBornPersonException(_birthday);
             return age;
         }
 
@@ -152,9 +158,9 @@ namespace Miedviediev_02
             Thread.Sleep(1000);
             DateTime nextBirthday = _birthday.AddYears(age + 1);
             TimeSpan difference = nextBirthday - DateTime.Today;
-            return Convert.ToInt32(difference.TotalDays) == 366;
+            return Convert.ToInt32(difference.TotalDays) == 365;
         }
-        
+
         public override string ToString()
         {
             return "\nName: " + _name +
@@ -165,6 +171,5 @@ namespace Miedviediev_02
                    "\nWesternZodiac: " + _westernZodiac +
                    "\nChineseSign: " + _chineseSign;
         }
-
     }
 }

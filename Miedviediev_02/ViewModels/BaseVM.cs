@@ -2,9 +2,9 @@
 using System.Runtime.CompilerServices;
 using Miedviediev_02.Annotations;
 
-namespace Miedviediev_02
+namespace Miedviediev_02.ViewModels
 {
-    public class BaseVM:INotifyPropertyChanged
+    public class BaseVm:INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

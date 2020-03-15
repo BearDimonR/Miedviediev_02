@@ -1,8 +1,9 @@
 ﻿using System.Windows;
+using Miedviediev_02.ViewModels;
 
-namespace Miedviediev_02
+namespace Miedviediev_02.Managers
 {
-    internal class LoaderManager : BaseVM
+    internal class LoaderManager : BaseVm
     {
         private static readonly object Locker = new object();
         private static LoaderManager _instance;
@@ -34,13 +35,13 @@ namespace Miedviediev_02
 
         internal void ShowLoader()
         {
-            _loaderOwner.IsControlEnabled = true;
+            _loaderOwner.IsControlEnabled = false;
             _loaderOwner.LoaderVisibility = Visibility.Visible;
         }    
         internal void HideLoader()
         {
             _loaderOwner.LoaderVisibility = Visibility.Hidden;
-            _loaderOwner.IsControlEnabled = false;
+            _loaderOwner.IsControlEnabled = true;
         }
     }
 }

@@ -40,16 +40,14 @@ namespace Miedviediev_02
         private static string CheckDate(object value)
         {
             return value == null ? "Date can't be empty!" : string.Empty;
-            // we can insert age check here, but according to task it must be checked after
-            // pressing 'Proceed' button, so it wasn't realized here
         }
 
         private static string CheckEmail(object value)
         {
-            Regex regex = new Regex(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$");
+            Regex regex = new Regex(@"^[\w-\.]{2,}@([\w-]{2,}\.)+[\w-]{2,4}$");
             if (value != null && regex.IsMatch(value.ToString()))
                 return "";
-            return "Wrong E-mail!";
+            return "Wrong E-mail! example@ukma.edu.ua";
         }
 
         private static string CheckText(object value)

@@ -6,37 +6,62 @@
     <e p="C:\Users\beard\OneDrive\Рабочий стол\Term4\C#\Miedviediev_02" t="IncludeFlat">
       <e p="Miedviediev_02" t="IncludeRecursive">
         <e p="App.config" t="Include" />
-        <e p="App.xaml" t="Include" />
-        <e p="App.xaml.cs" t="Include" />
-        <e p="BaseVM.cs" t="Include" />
         <e p="bin" t="ExcludeRecursive" />
-        <e p="ChineseZodiac.cs" t="Include" />
-        <e p="ILoaderOwner.cs" t="Include" />
-        <e p="InformationVM.cs" t="Include" />
+        <e p="Exceptions" t="Include">
+          <e p="AgeException.cs" t="Include" />
+          <e p="InvalidPersonName.cs" t="Include" />
+          <e p="InvalidPersonSurname.cs" t="Include" />
+          <e p="NotBornPersonException.cs" t="Include" />
+          <e p="NotEduMailException.cs" t="Include" />
+          <e p="OldPersonException.cs" t="Include" />
+        </e>
+        <e p="im" t="Include">
+          <e p="cake.png" t="Include" />
+        </e>
         <e p="InputValidation.cs" t="Include" />
-        <e p="LoaderManager.cs" t="Include" />
-        <e p="MainVM.cs" t="Include" />
-        <e p="MainWindow.xaml" t="Include" />
-        <e p="MainWindow.xaml.cs" t="Include" />
+        <e p="Managers" t="Include">
+          <e p="ILoaderOwner.cs" t="Include" />
+          <e p="LoaderManager.cs" t="Include" />
+        </e>
         <e p="Miedviediev_02.csproj" t="IncludeRecursive" />
+        <e p="Models" t="Include">
+          <e p="Person.cs" t="Include" />
+        </e>
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
-            <e p="App.g.cs" t="Include" />
             <e p="GeneratedInternalTypeHelper.g.cs" t="Include" />
-            <e p="MainWindow.g.cs" t="Include" />
+            <e p="Views" t="Include">
+              <e p="App.g.cs" t="Include" />
+              <e p="MainWindow.g.cs" t="Include" />
+              <e p="SignUp.g.cs" t="Include" />
+            </e>
           </e>
         </e>
         <e p="packages.config" t="Include" />
-        <e p="Person.cs" t="Include" />
         <e p="Properties" t="Include">
           <e p="Annotations.cs" t="Include" />
           <e p="AssemblyInfo.cs" t="Include" />
           <e p="Resources.Designer.cs" t="Include" />
           <e p="Resources.resx" t="Include" />
         </e>
-        <e p="SignUp.xaml" t="Include" />
-        <e p="SignUp.xaml.cs" t="Include" />
-        <e p="WesternZodiac.cs" t="Include" />
+        <e p="RelayCommand.cs" t="Include" />
+        <e p="ViewModels" t="Include">
+          <e p="BaseVM.cs" t="Include" />
+          <e p="InformationVM" t="Include">
+            <e p="ChineseZodiac.cs" t="Include" />
+            <e p="InformationVM.cs" t="Include" />
+            <e p="WesternZodiac.cs" t="Include" />
+          </e>
+          <e p="MainVM.cs" t="Include" />
+        </e>
+        <e p="Views" t="Include">
+          <e p="App.xaml" t="Include" />
+          <e p="App.xaml.cs" t="Include" />
+          <e p="MainWindow.xaml" t="Include" />
+          <e p="MainWindow.xaml.cs" t="Include" />
+          <e p="SignUp.xaml" t="Include" />
+          <e p="SignUp.xaml.cs" t="Include" />
+        </e>
       </e>
       <e p="Miedviediev_02.sln" t="IncludeFlat" />
       <e p="packages" t="ExcludeRecursive" />

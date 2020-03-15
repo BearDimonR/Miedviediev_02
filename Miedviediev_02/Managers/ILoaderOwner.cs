@@ -1,16 +1,15 @@
 ﻿using System.ComponentModel;
 using System.Windows;
 
-namespace Miedviediev_02
+namespace Miedviediev_02.Managers
 {
     internal interface ILoaderOwner : INotifyPropertyChanged
     {
         Visibility LoaderVisibility
         {
-            get;
             set;
         }
 
-        bool IsControlEnabled { get; set; }
+        bool IsControlEnabled { set; } 
     }
 }

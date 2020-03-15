@@ -1,8 +1,9 @@
 ﻿using System.Windows;
+using Miedviediev_02.Managers;
 
-namespace Miedviediev_02
+namespace Miedviediev_02.ViewModels
 {
-    public class MainVm:BaseVM, ILoaderOwner
+    public class MainVm:BaseVm, ILoaderOwner
     {
         private Visibility _loaderVisibility;
         public Visibility LoaderVisibility
@@ -19,6 +20,7 @@ namespace Miedviediev_02
 
         public bool IsControlEnabled
         {
+            //used in SignUp
             get => _isControlEnabled;
             set
             {
@@ -26,7 +28,7 @@ namespace Miedviediev_02
                 OnPropertyChanged(nameof(IsControlEnabled));
             }
         }
-
+        
         public MainVm()
         {
             LoaderManager.Instance.Initialize(this);

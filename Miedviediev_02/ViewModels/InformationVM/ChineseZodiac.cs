@@ -1,4 +1,4 @@
-﻿﻿namespace Miedviediev_02
+﻿﻿namespace Miedviediev_02.ViewModels.InformationVM
 {
     public enum ChineseZodiac
     {
